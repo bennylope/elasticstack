@@ -7,7 +7,7 @@ setup(
     author_email="ben.lopatin@wellfireinteractive.com",
     name='elasticstack',
     version='0.0.1',
-    description='Group accounts for Django',
+    description='Configurable indexing and other extras for Haystack (with ElasticSearch biases)',
     long_description=open(os.path.join(os.path.dirname(__file__),
         'README.rst')).read(),
     url='https://github.com/bennylope/elasticstack/',

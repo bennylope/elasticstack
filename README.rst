@@ -34,8 +34,8 @@ For more background see the blog post `Stretching Haystack's ElasticSearch
 Backend
 <http://www.wellfireinteractive.com/blog/custom-haystack-elasticsearch-backend/>`_.
 
-Stability , docs, and tests
-===========================
+Stability, docs, and tests
+==========================
 
 This project is in 'alpha'! Index control *should* remain fairly stable but
 everything should be considred subject to change until beta. As of yet, no docs

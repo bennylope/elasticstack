@@ -13,8 +13,11 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
     def __init__(self, connection_alias, **connection_options):
         super(ConfigurableElasticBackend, self).__init__(connection_alias, **connection_options)
         user_settings = getattr(settings, 'ELASTICSEARCH_INDEX_SETTINGS')
+        user_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_ANALYZER')
         if user_settings:
             setattr(self, 'DEFAULT_SETTINGS', user_settings)
+        if user_analyzer:
+            setattr(self, 'DEFAULT_ANALYZER', user_analyzer)
 
     def build_schema(self, fields):
         content_field_name, mapping = super(ConfigurableElasticBackend, self).build_schema(fields)

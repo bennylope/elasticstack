@@ -2,7 +2,7 @@
 elasticstack
 ============
 
-:Version: 0.0.1
+:Version: 0.0.3
 :Status: alpha
 :Author: Ben Lopatin (http://benlopatin.com)
 
@@ -23,16 +23,126 @@ Requirements
 Features and goals
 ==================
 
-* Configurable indexing, from the project level to the field level
-* Class based views more like Django CBV's
-* Indexing and debugging helpers
-
 Some of these features are backend agnostic but most features have
 ElasticSearch in mind.
 
 For more background see the blog post `Stretching Haystack's ElasticSearch
 Backend
 <http://www.wellfireinteractive.com/blog/custom-haystack-elasticsearch-backend/>`_.
+
+Configurable index mapping
+--------------------------
+
+The search mapping provided by Haystack's ElasticSearch backend includes brief
+but sensible defaults for nGram analysis. You can add change these settings or
+add your own mappings by providing a mapping dictionary using
+`ELASTICSEARCH_INDEX_SETTINGS` in your settings file. This example takes the
+default mapping and adds a synonym analyzer::
+
+    ELASTICSEARCH_INDEX_SETTINGS = {
+        'settings': {
+            "analysis": {
+                "analyzer": {
+                    "synonym_analyzer" : {
+                        "type": "custom",
+                        "tokenizer" : "standard",
+                        "filter" : ["synonym"]
+                    },
+                    "ngram_analyzer": {
+                        "type": "custom",
+                        "tokenizer": "lowercase",
+                        "filter": ["haystack_ngram", "synonym"]
+                    },
+                    "edgengram_analyzer": {
+                        "type": "custom",
+                        "tokenizer": "lowercase",
+                        "filter": ["haystack_edgengram"]
+                    }
+                },
+                "tokenizer": {
+                    "haystack_ngram_tokenizer": {
+                        "type": "nGram",
+                        "min_gram": 3,
+                        "max_gram": 15,
+                    },
+                    "haystack_edgengram_tokenizer": {
+                        "type": "edgeNGram",
+                        "min_gram": 2,
+                        "max_gram": 15,
+                        "side": "front"
+                    }
+                },
+                "filter": {
+                    "haystack_ngram": {
+                        "type": "nGram",
+                        "min_gram": 3,
+                        "max_gram": 15
+                    },
+                    "haystack_edgengram": {
+                        "type": "edgeNGram",
+                        "min_gram": 2,
+                        "max_gram": 15
+                    },
+                    "synonym" : {
+                        "type" : "synonym",
+                        "ignore_case": "true",
+                        "synonyms_path" : "synonyms.txt"
+                    }
+                }
+            }
+        }
+    }
+
+The synonym filter is ready for your index, but will go unused yet. 
+
+The default analyzer for non-nGram fields in Haystack's ElasticSearch backend
+is the `snowball analyzer
+<http://www.elasticsearch.org/guide/reference/index-modules/analysis/snowball-analyzer.html>`_.
+A perfectly good analyzer but not necessarily what you need, and also language
+specific (English by default).
+
+Specify your analyzer with `ELASTICSEARCH_DEFAULT_ANALYZER` in your settings
+file::
+
+    ELASTICSEARCH_DEFAULT_ANALYZER = 'synonym_analyzer'
+
+Now all your analyzed fields, except for nGram fields, will be analyzed using
+`synonym_analyzer`.
+
+Field based analysis
+--------------------
+
+Even with a new default analyzer you may want to change this on a field by
+field basis as fits your needs. To do so, use the fields from
+`elasticstack.fields` to specify your analyzer with the `analyzer` keyword
+argument::
+
+    from haystack import indexes
+    from elasticstack.fields import CharField
+    from myapp.models import MyContent
+
+    class MyContentIndex(indexes.SearchIndex, indexes.Indexable):
+        text = CharField(document=True, use_template=True,
+                analyzer='synonym_analyzer')
+
+    def get_model(self):
+        return MyContent
+
+
+Django CBV style views
+----------------------
+
+TODO
+
+Index debugging helpers
+-----------------------
+
+Make a change and wonder why your results don't look as expected? The
+management command `print_search_mapping` will print the current mapping for
+your defined search index(es). At the least it may show that you've simply
+forgotten to update your index with new mappings::
+
+    python manage.py print_search_mapping
 
 Stability, docs, and tests
 ==========================

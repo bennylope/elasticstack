@@ -134,15 +134,24 @@ Django CBV style views
 
 TODO
 
-Index debugging helpers
------------------------
+Management commands
+-------------------
+
+show_mapping
+~~~~~~~~~~~~
 
 Make a change and wonder why your results don't look as expected? The
-management command `print_search_mapping` will print the current mapping for
+management command `show_mapping` will print the current mapping for
 your defined search index(es). At the least it may show that you've simply
 forgotten to update your index with new mappings::
 
-    python manage.py print_search_mapping
+    python manage.py show_mapping
+
+show_document
+~~~~~~~~~~~~~
+
+Provided the name of an indexed model and a key it generates and prints the
+document for this object.
 
 Stability, docs, and tests
 ==========================

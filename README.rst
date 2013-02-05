@@ -98,7 +98,7 @@ The synonym filter is ready for your index, but will go unused yet.
 The default analyzer for non-nGram fields in Haystack's ElasticSearch backend
 is the `snowball analyzer
 <http://www.elasticsearch.org/guide/reference/index-modules/analysis/snowball-analyzer.html>`_.
-A perfectly good analyzer but not necessarily what you need, and also language
+A perfectly good analyzer but not necessarily what you need. It's also language
 specific (English by default).
 
 Specify your analyzer with `ELASTICSEARCH_DEFAULT_ANALYZER` in your settings
@@ -132,7 +132,30 @@ argument::
 Django CBV style views
 ----------------------
 
-TODO
+Haystacks's class based views predate the inclusion of CBVs into the Django
+core and so the paradigms are different. This makes it harder to impossible to
+make use of view mixins.
+
+The bundled `SearchView` and `FacetedSearchView` classes are based on
+`django.views.generic.edit.FormView` using the `SearchMixin` and
+`FacetedSearchMixin`, respectively. The `SearchMixin` provides the necessary
+search related attributes and overloads the form processing methods to execute
+the search.
+
+The `SearchMixin` adds a few search specific attributes:
+
+* `load_all` - a Boolean value for `specifying database lookups <http://django-haystack.readthedocs.org/en/latest/searchqueryset_api.html#load-all>`_
+* `queryset` - a default `SearchQuerySet`. Defaults to `EmtpySearchQuerySet`
+* `search_field` - the name of the form field used for the query. This is added
+  to allow for views which may have more than one search form. Defaults to `q`.
+
+.. note::
+    The `SearchMixin` uses the attribute named `queryset` for the resultant
+    `SearchQuerySet`. Naming this attribute `searchqueryset` would make more
+    sense semantically and hew closer to Haystack's naming convention, however
+    by using the `queryset` attribute shared by other Django view mixins it is
+    relatively easy to combine search functionality with other mixins and
+    views.
 
 Management commands
 -------------------
@@ -151,7 +174,11 @@ show_document
 ~~~~~~~~~~~~~
 
 Provided the name of an indexed model and a key it generates and prints the
-document for this object.
+generated document for this object::
+
+    python manage.py show_document myapp.MyModel 19181
+
+The JSON document will be formatted with 'pretty' indenting.
 
 Stability, docs, and tests
 ==========================

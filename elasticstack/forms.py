@@ -1,12 +1,17 @@
-# A better search form will not require the use of a specifically named `q`
-# field for search.
-
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from haystack.query import SearchQuerySet, EmptySearchQuerySet
+
+from haystack.query import SearchQuerySet
 
 
 class SearchForm(forms.Form):
+    """
+    A search form that does not require the use of a specifically named `q`
+    field for search.
+
+    Another field can be substituted provided that it is identified using the
+    `search_field_name` attribute.
+    """
     q = forms.CharField(label=_('Search'))
 
     search_field_name = 'q'
@@ -18,25 +23,14 @@ class SearchForm(forms.Form):
         if self.search_field_name != 'q':
             self.fields.pop('q')
 
-    def no_query_found(self):
-        """
-        Determines the behavior when no query was found.
-
-        By default, no results are returned (``EmptySearchQuerySet``).
-
-        Should you want to show all results, override this method in your
-        own ``SearchForm`` subclass and do ``return self.searchqueryset.all()``.
-        """
-        return EmptySearchQuerySet()
-
     def search(self):
         if not self.is_valid():
             return self.no_query_found()
 
-        if not self.cleaned_data.get('q'):
+        if not self.cleaned_data.get(self.search_field_name):
             return self.no_query_found()
 
-        sqs = self.searchqueryset.auto_query(self.cleaned_data['q'])
+        sqs = self.searchqueryset.auto_query(self.cleaned_data[self.search_field_name])
 
         if self.load_all:
             sqs = sqs.load_all()
@@ -47,4 +41,4 @@ class SearchForm(forms.Form):
         if not self.is_valid():
             return None
 
-        return self.searchqueryset.spelling_suggestion(self.cleaned_data['q'])
+        return self.searchqueryset.spelling_suggestion(self.cleaned_data[self.search_field_name])

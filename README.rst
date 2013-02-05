@@ -125,8 +125,8 @@ argument::
         text = CharField(document=True, use_template=True,
                 analyzer='synonym_analyzer')
 
-    def get_model(self):
-        return MyContent
+        def get_model(self):
+            return MyContent
 
 
 Django CBV style views

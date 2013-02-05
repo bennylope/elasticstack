@@ -3,6 +3,9 @@ from haystack import connections
 
 def prepare_object(obj, using='default'):
     """
+    Returns a Python dictionary representation of the given object, expected to
+    be a Model object with an associated SearchIndex. The optional argument
+    `using` specifies the backend to use from the Haystack connections list.
     """
     model = obj.__class__
     unified_index = connections[using].get_unified_index()

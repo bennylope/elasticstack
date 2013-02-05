@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.core.paginator import Paginator
-from haystack.forms import ModelSearchForm, FacetedSearchForm
-from haystack.query import EmptySearchQuerySet
-
-from django.views.generic.list import MultipleObjectMixin
 from django.views.generic import FormView
 from django.views.generic.edit import FormMixin
+from django.views.generic.list import MultipleObjectMixin
+
+from haystack.forms import ModelSearchForm, FacetedSearchForm
+from haystack.query import EmptySearchQuerySet
 
 
 RESULTS_PER_PAGE = getattr(settings, 'HAYSTACK_SEARCH_RESULTS_PER_PAGE', 20)

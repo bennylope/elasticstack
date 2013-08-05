@@ -18,7 +18,7 @@ class Command(BaseCommand):
             action='store_true',
             dest='using',
             default='default',
-            help='Delete poll instead of closing it'),
+            help='The Haystack backend to use'),
         )
 
     def handle(self, *args, **options):

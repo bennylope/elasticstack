@@ -170,6 +170,55 @@ forgotten to update your index with new mappings::
 
     python manage.py show_mapping
 
+By default this will display the `existing_mapping` which shows the index,
+document type, and document properties.::
+
+    {
+        "haystack": {
+            "modelresult": {
+                "properties": {
+                    "is_active": {
+                        "type": "boolean"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "published": {
+                        "type": "date",
+                        "format": "dateOptionalTime"
+                    }
+                }
+            }
+        }
+    }
+
+If you provide the `--detail` flag this will return only the field mappings but
+including additional details, such as boost levels and field-specific
+analyzers.::
+
+    {
+        "is_active": {
+            "index": "not_analyzed",
+            "boost": 1,
+            "store": "yes",
+            "type": "boolean"
+        },
+        "text": {
+            "index": "analyzed",
+            "term_vector": "with_positions_offsets",
+            "type": "string",
+            "analyzer": "custom_analyzer",
+            "boost": 1,
+            "store": "yes"
+        },
+        "pub_date": {
+            "index": "analyzed",
+            "boost": 1,
+            "store": "yes",
+            "type": "date"
+        }
+    }
+
 show_document
 ~~~~~~~~~~~~~
 

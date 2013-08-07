@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
         make_option('--using',
-            action='store_true',
+            action='store',
             dest='using',
             default='default',
             help='The Haystack backend to use'),

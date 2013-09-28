@@ -6,7 +6,7 @@ setup(
     author="Ben Lopatin",
     author_email="ben.lopatin@wellfireinteractive.com",
     name='elasticstack',
-    version='0.0.4',
+    version='0.0.5',
     description='Configurable indexing and other extras for Haystack (with ElasticSearch biases)',
     long_description=open(os.path.join(os.path.dirname(__file__),
         'README.rst')).read(),
@@ -24,8 +24,9 @@ setup(
     ],
     install_requires=[
         'Django>=1.4',
+        'django-haystack>=2.0.0',
     ],
     include_package_data=True,
     packages=find_packages(),
-    zip_safe=False
+    zip_safe=False,
 )

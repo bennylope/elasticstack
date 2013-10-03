@@ -25,6 +25,7 @@ setup(
     install_requires=[
         'Django>=1.4',
         'django-haystack>=2.0.0',
+        'pyelasticsearch>=0.5',
     ],
     include_package_data=True,
     packages=find_packages(),

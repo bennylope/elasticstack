@@ -2,7 +2,7 @@
 elasticstack
 ============
 
-:Version: 0.0.5
+:Version: 0.0.6
 :Status: alpha
 :Author: Ben Lopatin (http://benlopatin.com)
 

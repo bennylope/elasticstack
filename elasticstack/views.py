@@ -78,7 +78,7 @@ class SearchMixin(MultipleObjectMixin, FormMixin):
 
 class FacetedSearchMixin(SearchMixin):
     """
-    A mixin that llows adding in a Haystack search functionality with search
+    A mixin that allows adding in a Haystack search functionality with search
     faceting.
     """
     form_class = FacetedSearchForm

@@ -1,1 +1,6 @@
-include setup.py README.rst MANIFEST.in LICENSE
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include HISTORY.rst
+include LICENSE
+include README.rst
+recursive-include elasticstack *.html *.png *.gif *js *jpg *jpeg *svg *py

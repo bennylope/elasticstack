@@ -1,4 +1,13 @@
-Primary developers and contributors
+=======
+Credits
+=======
 
-Ben Lopatin @bennylope
-Basil Shubin @bashu
+Development Lead
+----------------
+
+* Ben Lopatin @bennylope
+
+Contributors
+------------
+
+* Basil Shubin @bashu

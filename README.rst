@@ -2,6 +2,15 @@
 elasticstack
 ============
 
+.. image:: https://badge.fury.io/py/elasticstack.png
+    :target: http://badge.fury.io/py/elasticstack
+
+.. image:: https://travis-ci.org/bennylope/elasticstack.png?branch=master
+        :target: https://travis-ci.org/bennylope/elasticstack
+
+.. image:: https://pypip.in/d/elasticstack/badge.png
+        :target: https://crate.io/packages/elasticstack?version=latest
+
 :Version: 0.0.6
 :Status: alpha
 :Author: Ben Lopatin (http://benlopatin.com)

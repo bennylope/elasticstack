@@ -110,5 +110,8 @@ class SearchView(SearchMixin, FormView):
 
 
 class FacetedSearchView(FacetedSearchMixin, SearchView):
-    """A view class for searching a Haystack managed search index with facets"""
+    """
+    A view class for searching a Haystack managed search index with
+    facets
+    """
     pass

@@ -8,20 +8,12 @@ test_elasticstack
 Tests for `elasticstack` views module.
 """
 
-import os
-import shutil
-import unittest
+from django.test import TestCase
 
 from elasticstack import views
 
 
-class TestElasticstack(unittest.TestCase):
+class TestElasticstack(TestCase):
 
     def setUp(self):
-        pass
-
-    def test_something(self):
-        pass
-
-    def tearDown(self):
         pass

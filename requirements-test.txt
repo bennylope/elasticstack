@@ -1,3 +1,6 @@
+Django>=1.4
+django-haystack>=2.0.0
+pyelasticsearch>=0.5
 coverage
 coveralls
 mock>=1.0.1

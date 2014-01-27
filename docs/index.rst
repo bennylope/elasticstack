@@ -1,10 +1,17 @@
-.. complexity documentation master file, created by
-   sphinx-quickstart on Tue Jul  9 22:26:36 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+elasticstack: Haystack tools for ElasticSearch
+==============================================
 
-Welcome to elasticstack's documentation!
-=================================================================
+`Django <https://www.djangoproject.com/>_` is the web framework for
+perfectionists with deadlines.
+
+`ElasticSearch <http://www.elasticsearch.org/>`_ is a Lucene based search
+engine and distributed data store with a JSON interface.
+
+`Haystack <http://django-haystack.readthedocs.org/en/latest/>`_ is the fastest
+way to map Django project models to a search index and search your site.
+
+elasticstack is a set of ElasticSearch specific helpers for Haystack-based
+projects.
 
 Contents:
 
@@ -14,6 +21,7 @@ Contents:
    readme
    installation
    usage
+   commands
    contributing
    authors
    history

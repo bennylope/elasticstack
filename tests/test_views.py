@@ -5,14 +5,14 @@
 test_elasticstack
 ------------
 
-Tests for `elasticstack` modules module.
+Tests for `elasticstack` views module.
 """
 
 import os
 import shutil
 import unittest
 
-from elasticstack import models
+from elasticstack import views
 
 
 class TestElasticstack(unittest.TestCase):

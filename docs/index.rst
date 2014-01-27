@@ -1,7 +1,7 @@
 elasticstack: Haystack tools for ElasticSearch
 ==============================================
 
-`Django <https://www.djangoproject.com/>_` is the web framework for
+`Django <https://www.djangoproject.com/>`_ is the web framework for
 perfectionists with deadlines.
 
 `ElasticSearch <http://www.elasticsearch.org/>`_ is a Lucene based search

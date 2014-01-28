@@ -36,7 +36,7 @@ is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-elasticstack could always use more documentation, whether as part of the 
+elasticstack could always use more documentation, whether as part of the
 official elasticstack docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 

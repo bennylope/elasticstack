@@ -11,15 +11,14 @@ from ...utils import prepare_object
 class Command(BaseCommand):
 
     help = "Prints the indexing document generated for a model object." \
-            "\nUse dotted path name for model and the primary key."
+        "\nUse dotted path name for model and the primary key."
 
     option_list = BaseCommand.option_list + (
         make_option('--using',
             action='store',
             dest='using',
             default='default',
-            help='The Haystack backend to use'),
-        )
+            help='The Haystack backend to use'))
 
     def handle(self, *args, **options):
         try:

@@ -11,12 +11,15 @@ elasticstack
 .. image:: https://pypip.in/d/elasticstack/badge.png
         :target: https://crate.io/packages/elasticstack?version=latest
 
-:Version: 0.0.6
+:Version: 0.1.0
 :Status: alpha
 :Author: Ben Lopatin (http://benlopatin.com)
 
 Configurable indexing and other extras for Haystack (with ElasticSearch
 biases).
+
+Full documentation is on `Read the Docs
+<http://elasticstack.readthedocs.org/en/latest/>`_.
 
 Requirements
 ============
@@ -241,10 +244,10 @@ The JSON document will be formatted with 'pretty' indenting.
 Stability, docs, and tests
 ==========================
 
-This project is in 'alpha'! Index control *should* remain fairly stable but
-everything should be considred subject to change until beta. As of yet, no docs
-(see the aforementioned blog post to get started) and no tests (hold on to your
-butts).
+The form, view, and backend functionality in this project is considered stable.
+Test coverage is not substantial, but is run against Django 1.4 through Django
+1.6 on Python 2.6 and Python 2.7, Django 1.5 and Django 1.6 on Python 3.3, and
+Django 1.6 on PyPy.
 
 Why not add this stuff to Haystack?
 -----------------------------------

@@ -3,4 +3,4 @@
 
 __title__ = 'elasticstack'
 __author__ = 'Ben Lopatin'
-__version__ = '0.0.6'
+__version__ = '0.1.0'

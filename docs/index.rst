@@ -20,7 +20,8 @@ Contents:
 
    readme
    installation
-   usage
+   mappings
+   views
    commands
    contributing
    authors

@@ -23,7 +23,7 @@ try:
         NOSE_ARGS=['-s'],
         HAYSTACK_CONNECTIONS={
             'default': {
-                'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+                'ENGINE': 'elasticstack.backends.ConfigurableElasticSearchEngine',
                 'URL': 'http://127.0.0.1:9200/',
                 'INDEX_NAME': 'haystack',
             },

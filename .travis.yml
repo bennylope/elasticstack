@@ -1,15 +1,17 @@
 language: python
 python: 2.7
 env:
-  - TOX_ENV=py26-django14
-  - TOX_ENV=py26-django15
-  - TOX_ENV=py26-django16
-  - TOX_ENV=py27-django14
-  - TOX_ENV=py27-django15
-  - TOX_ENV=py27-django16
-  - TOX_ENV=py33-django15
-  - TOX_ENV=py33-django16
-  - TOX_ENV=pypy-django16
+  - TOX_ENV=py26-dj14
+  - TOX_ENV=py26-dj15
+  - TOX_ENV=py26-dj16
+  - TOX_ENV=py27-dj14
+  - TOX_ENV=py27-dj15
+  - TOX_ENV=py27-dj16
+  - TOX_ENV=py27-dj16-haydev
+  - TOX_ENV=py33-dj15
+  - TOX_ENV=py33-dj16
+  - TOX_ENV=pypy-dj16
+  - TOX_ENV=py33-dj16-haydev
   - TOX_ENV=flake8
 install:
   - pip install tox

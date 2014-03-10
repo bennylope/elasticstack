@@ -8,7 +8,7 @@ Base installation
 Installation is straightforward. With your `virtualenv
 <http://www.virtualenv.org/en/latest/>`_ activated, use pip to install::
 
-    $ pip elasticstack
+    $ pip install elasticstack
 
 Then add `elasticstack` to your Django project's `INSTALLED_APPS`::
 

@@ -107,6 +107,17 @@ default mapping and adds a synonym analyzer::
 
 The synonym filter is ready for your index, but will go unused yet. 
 
+Before your new analyzer can be used you will need to change your Haystack engine and rebuild/update
+your index. In your `settings.py` modify `HAYSTACK_CONNECTIONS` accordingly::
+
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'elasticstack.backends.ConfigurableElasticSearchEngine',
+            'URL': env_var('HAYSTACK_URL', 'http://127.0.0.1:9200/'),
+            'INDEX_NAME': 'haystack',
+        },
+    }
+
 The default analyzer for non-nGram fields in Haystack's ElasticSearch backend
 is the `snowball analyzer
 <http://www.elasticsearch.org/guide/reference/index-modules/analysis/snowball-analyzer.html>`_.

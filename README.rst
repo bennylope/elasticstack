@@ -108,7 +108,7 @@ default mapping and adds a synonym analyzer::
 The synonym filter is ready for your index, but will go unused yet. 
 
 Before your new analyzer can be used you will need to change your Haystack engine and rebuild/update
-your index. In your `settings.py` modify `HAYSTACK_CONNECTIONS` accordingly:
+your index. In your `settings.py` modify `HAYSTACK_CONNECTIONS` accordingly::
 
     HAYSTACK_CONNECTIONS = {
         'default': {

@@ -3,6 +3,12 @@
 History
 -------
 
+0.1.0 (2014-11-24)
+++++++++++++++++++
+
+* Major structural changes
+* Bugfix for configurable search fields
+
 0.0.6 (2013-10-04)
 ++++++++++++++++++
 

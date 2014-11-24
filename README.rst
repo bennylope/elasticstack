@@ -11,8 +11,8 @@ elasticstack
 .. image:: https://pypip.in/d/elasticstack/badge.png
         :target: https://crate.io/packages/elasticstack?version=latest
 
-:Version: 0.1.0
-:Status: alpha
+:Version: 0.1.1
+:Status: beta
 :Author: Ben Lopatin (http://benlopatin.com)
 
 Configurable indexing and other extras for Haystack (with ElasticSearch

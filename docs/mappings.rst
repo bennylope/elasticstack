@@ -98,6 +98,11 @@ argument::
 Now the `text` field will be indexed using the `stop` analyzer, and the `body`
 field will be indexed using the default analyzer.
 
+.. attention::
+
+    Using a configurable field without specifying an analyzer will raise a
+    `ValueError`.
+
 
 Custom analyzers and additional configuration
 =============================================

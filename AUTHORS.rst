@@ -12,3 +12,4 @@ Contributors
 
 * Basil Shubin @bashu
 * Joe Stump @joestump
+* @rjor2

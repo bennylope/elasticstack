@@ -11,7 +11,7 @@ elasticstack
 .. image:: https://pypip.in/d/elasticstack/badge.svg
         :target: https://crate.io/packages/elasticstack?version=latest
 
-:Version: 0.1.0
+:Version: 0.1.1
 :Status: beta
 :Author: Ben Lopatin (http://benlopatin.com)
 

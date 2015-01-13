@@ -3,6 +3,11 @@
 History
 -------
 
+0.1.1 (2015-01-13)
+++++++++++++++++++
+
+* Bug fix in show_document management command
+
 0.1.0 (2014-11-24)
 ++++++++++++++++++
 

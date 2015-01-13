@@ -18,7 +18,7 @@ class Command(BaseCommand):
             action='store',
             dest='using',
             default='default',
-            help='The Haystack backend to use'))
+            help='The Haystack backend to use'),)
 
     def handle(self, *args, **options):
         try:

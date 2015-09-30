@@ -3,6 +3,13 @@
 History
 -------
 
+0.2.0 (2015-09-29)
+++++++++++++++++++
+
+* Switch to py.test
+* Tests against Django 1.8, 1.9
+* Drop pyelasticsearch requirement for installation
+
 0.1.1 (2015-01-13)
 ++++++++++++++++++
 

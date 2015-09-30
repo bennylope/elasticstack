@@ -1,24 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import sys
+from setuptools import setup
 
 import elasticstack
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
 version = elasticstack.__version__
-
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
-    print("  git push --tags")
-    sys.exit()
 
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')

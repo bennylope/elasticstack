@@ -38,7 +38,6 @@ setup(
     install_requires=[
         'Django>=1.4',
         'django-haystack>=2.0.0',
-        'pyelasticsearch>=0.5',
     ],
     license="BSD",
     zip_safe=False,
@@ -50,9 +49,9 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
 )

@@ -1,17 +1,14 @@
 language: python
 python: 2.7
 env:
-  - TOX_ENV=py26-dj14
-  - TOX_ENV=py26-dj16
-  - TOX_ENV=py27-dj14
-  - TOX_ENV=py27-dj16
-  - TOX_ENV=py27-dj16-haydev
-  - TOX_ENV=py33-dj16
-  - TOX_ENV=pypy-dj16
-  - TOX_ENV=py33-dj16-haydev
   - TOX_ENV=flake8
+  - TOX_ENV=py27-dj18
+  - TOX_ENV=py27-dj19
+  - TOX_ENV=py34-dj18
+  - TOX_ENV=py34-dj19
+  - TOX_ENV=py35-dj18
+  - TOX_ENV=py35-dj19
 install:
   - pip install tox
 script:
   - tox -e $TOX_ENV
-#after_success: coveralls

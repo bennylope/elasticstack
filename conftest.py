@@ -34,4 +34,7 @@ def pytest_configure():
         MIDDLEWARE_CLASSES=(),
         SITE_ID=1,
     )
-    django.setup()
+    try:
+        django.setup()
+    except AttributeError:
+        pass

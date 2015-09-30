@@ -1,5 +1,13 @@
 language: python
 python: 2.7
+
+matrix:
+    include:
+        - python: 3.5
+        env:
+          - TOX_ENV=py35-django18-haystack24
+          - TOX_ENV=py35-django19-haystack24
+
 env:
   - TOX_ENV=flake8
   - TOX_ENV=py27-django14-haystack22
@@ -11,8 +19,11 @@ env:
   - TOX_ENV=py34-django19-haystack24
   - TOX_ENV=py35-django18-haystack24
   - TOX_ENV=py35-django19-haystack24
+
 install:
   - pip install tox
+
 script:
   - tox -e $TOX_ENV
+
 sudo: false

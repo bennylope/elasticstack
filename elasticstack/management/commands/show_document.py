@@ -26,9 +26,8 @@ import json
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
-from django.db.models import get_model
 
-from ...utils import prepare_object
+from ...utils import prepare_object, get_model
 
 
 class Command(BaseCommand):
@@ -46,10 +45,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             label, pk = args
-        except IndexError:
+        except (IndexError, ValueError):
             self.stderr.write("Provide the model name and primary key")
+            exit(1)
+
         app_label, model_name = label.split('.')
         model = get_model(app_label, model_name)
+
         obj = model.objects.get(pk=pk)
         doc_json = prepare_object(obj, options.get('using'))
         self.stdout.write(json.dumps(doc_json, indent=4))

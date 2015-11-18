@@ -23,7 +23,6 @@
 
 from haystack import connections
 from importlib import import_module
-from django.apps import apps
 
 
 def prepare_object(obj, using='default'):
@@ -45,12 +44,22 @@ def prepare_object(obj, using='default'):
 def get_model(app_label, model_name):
     """
     Fetches a Django model using the app registry.
-    This doesn't require that an app with the given app label exists,
-    which makes it safe to call when the registry is being populated.
-    All other methods to access models might raise an exception about the
-    registry not being ready yet.
+
+    This doesn't require that an app with the given app label exists, which
+    makes it safe to call when the registry is being populated. All other
+    methods to access models might raise an exception about the registry not
+    being ready yet.
+
     Raises LookupError if model isn't found.
     """
+    try:
+        from django.apps import apps
+        from django.core.exceptions import AppRegistryNotReady
+    except ImportError:
+        # Older Django version!
+        from django.db import models
+        return models.get_model(app_label, model_name)
+
     try:
         return apps.get_model(app_label, model_name)
     except AppRegistryNotReady:

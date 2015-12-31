@@ -38,7 +38,7 @@ class TestBackendSettings(TestCase):
         self.assertEqual(back_class.DEFAULT_SETTINGS, {"index": 4})
 
     @override_settings(ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
-    def test_user_analyzer(self):
+    def test_ngram_user_analyzer(self):
         """Ensure that the default analyzer is overridden"""
         back_class = backends.ConfigurableElasticBackend(
             'default', URL="http://localhost:9200", INDEX_NAME="")

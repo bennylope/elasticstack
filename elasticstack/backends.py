@@ -32,15 +32,19 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
     mappings and field-by-field analyzers.
     """
     DEFAULT_ANALYZER = "snowball"
+    DEFAULT_NGRAM_SEARCH_ANALYZER = None
 
     def __init__(self, connection_alias, **connection_options):
         super(ConfigurableElasticBackend, self).__init__(connection_alias, **connection_options)
         user_settings = getattr(settings, 'ELASTICSEARCH_INDEX_SETTINGS', None)
         user_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_ANALYZER', None)
+        ngram_search_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER', None)
         if user_settings:
             setattr(self, 'DEFAULT_SETTINGS', user_settings)
         if user_analyzer:
             setattr(self, 'DEFAULT_ANALYZER', user_analyzer)
+        if ngram_search_analyzer:
+            setattr(self, 'DEFAULT_NGRAM_SEARCH_ANALYZER', ngram_search_analyzer)
 
     def build_schema(self, fields):
         content_field_name, mapping = super(ConfigurableElasticBackend, self).build_schema(fields)
@@ -51,6 +55,11 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
             if field_mapping['type'] == 'string' and field_class.indexed:
                 if not hasattr(field_class, 'facet_for') and not field_class.field_type in('ngram', 'edge_ngram'):
                     field_mapping['analyzer'] = getattr(field_class, 'analyzer', self.DEFAULT_ANALYZER)
+                if not hasattr(field_class, 'facet_for') \
+                   and field_class.field_type in('ngram', 'edge_ngram') \
+                   and self.DEFAULT_NGRAM_SEARCH_ANALYZER:
+                    field_mapping['search_analyzer'] = getattr(field_class, 'search_analyzer',
+                                                               self.DEFAULT_NGRAM_SEARCH_ANALYZER)
             mapping.update({field_class.index_fieldname: field_mapping})
         return (content_field_name, mapping)
 

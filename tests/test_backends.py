@@ -12,6 +12,7 @@ from django.test import TestCase
 from django.test.utils import override_settings
 
 from haystack.fields import CharField as HaystackCharField
+from haystack.fields import EdgeNgramField as HaystackEdgeNgramField
 
 from elasticstack import backends
 from elasticstack import fields
@@ -36,6 +37,13 @@ class TestBackendSettings(TestCase):
             'default', URL="http://localhost:9200", INDEX_NAME="")
         self.assertEqual(back_class.DEFAULT_SETTINGS, {"index": 4})
 
+    @override_settings(ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
+    def test_user_analyzer(self):
+        """Ensure that the default analyzer is overridden"""
+        back_class = backends.ConfigurableElasticBackend(
+            'default', URL="http://localhost:9200", INDEX_NAME="")
+        self.assertEqual(back_class.DEFAULT_NGRAM_SEARCH_ANALYZER, "stop")
+
 
 class TestSchema(TestCase):
     """
@@ -56,6 +64,17 @@ class TestSchema(TestCase):
         schema = back_class.build_schema({'body': text_field})
         self.assertEqual("snowball", schema[1]['body']['analyzer'])
 
+    def test_contral_search_analyzer(self):
+        """Control test that the default ngram search analyzer is None"""
+        back_class = backends.ConfigurableElasticBackend(
+            'default', URL="http://localhost:9200", INDEX_NAME="")
+        text_field = HaystackEdgeNgramField(document=True, use_template=True,
+                index_fieldname='body')
+        # build_schema is passed a SortedDict of search index fields keyed by
+        # field name
+        schema = back_class.build_schema({'body': text_field})
+        self.assertFalse('search_analyzer' in schema[1]['body'])
+
     @override_settings(ELASTICSEARCH_DEFAULT_ANALYZER="stop")
     def test_custom_analyzer(self):
         """Ensure custom analyzer used for fields"""
@@ -67,6 +86,19 @@ class TestSchema(TestCase):
         # field name
         schema = back_class.build_schema({'body': text_field})
         self.assertEqual("stop", schema[1]['body']['analyzer'])
+
+    @override_settings(ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
+    def test_custom_search_analyzer(self):
+        """Ensure custom analyzer used for fields"""
+        back_class = backends.ConfigurableElasticBackend(
+            'default', URL="http://localhost:9200", INDEX_NAME="")
+        text_field = HaystackEdgeNgramField(document=True, use_template=True,
+                index_fieldname='body')
+        # build_schema is passed a SortedDict of search index fields keyed by
+        # field name
+        schema = back_class.build_schema({'body': text_field})
+        self.assertTrue('search_analyzer' in schema[1]['body'])
+        self.assertEqual("stop", schema[1]['body']['search_analyzer'])
 
     def test_field_analyzer(self):
         """Ensure that field analyzer works on a case by case basis"""

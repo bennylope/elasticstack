@@ -42,6 +42,7 @@ class ConfigurableFieldMixin(object):
 
     def __init__(self, **kwargs):
         self.analyzer = kwargs.pop('analyzer', None)
+        self.search_analyzer = kwargs.pop('search_analyzer', None)
         if self.analyzer is None:
             raise ValueError("Configurable fields must have an analyzer type")
         super(ConfigurableFieldMixin, self).__init__(**kwargs)

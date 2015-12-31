@@ -125,6 +125,11 @@ file::
 Now all your analyzed fields, except for nGram fields, will be analyzed using
 `synonym_analyzer`.
 
+If you want to specify a custom search_analyzer for nGram/EdgeNgram fields,
+define it with the `ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER` settings::
+
+    ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER = 'standard'
+
 Field based analysis
 --------------------
 

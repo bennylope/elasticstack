@@ -56,7 +56,7 @@ def get_model(app_label, model_name):
         from django.apps import apps
         from django.core.exceptions import AppRegistryNotReady
     except ImportError:
-        # Older Django version!
+        # Django < 1.7
         from django.db import models
         return models.get_model(app_label, model_name)
 
@@ -73,7 +73,7 @@ def get_model(app_label, model_name):
             app_config = apps.get_app_config(app_label)
             # `app_config.import_models()` cannot be used here because it
             # would interfere with `apps.populate()`.
-            import_module('%s.%s' % (app_config.name, MODELS_MODULE_NAME))
+            import_module('%s.%s' % (app_config.name, 'models'))
             # In order to account for case-insensitivity of model_name,
             # look up the model through a private API of the app registry.
             return apps.get_registered_model(app_label, model_name)

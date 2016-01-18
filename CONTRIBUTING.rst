@@ -67,6 +67,7 @@ Ready to contribute? Here's how to set up `elasticstack` for local development.
     $ mkvirtualenv elasticstack
     $ cd elasticstack/
     $ python setup.py develop
+    $ pip install -r requirements-test.txt
 
 4. Create a branch for local development::
 
@@ -78,7 +79,7 @@ Now you can make your changes locally.
 tests, including testing other Python versions with tox::
 
     $ flake8 elasticstack tests
-    $ python setup.py test
+    $ python -m pytest
     $ tox
 
 To get flake8 and tox, just pip install them into your virtualenv. 
@@ -109,4 +110,4 @@ Tips
 
 To run a subset of tests::
 
-    $ python -m unittest tests.test_elasticstack
+    $ python -m pytest tests\test_backends.py

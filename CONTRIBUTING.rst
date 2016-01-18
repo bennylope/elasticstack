@@ -79,7 +79,6 @@ Now you can make your changes locally.
 tests, including testing other Python versions with tox::
 
     $ flake8 elasticstack tests
-    $ python -m pytest
     $ tox
 
 To get flake8 and tox, just pip install them into your virtualenv. 
@@ -110,4 +109,4 @@ Tips
 
 To run a subset of tests::
 
-    $ python -m pytest tests\test_backends.py
+    $ py.test tests/test_backends.py

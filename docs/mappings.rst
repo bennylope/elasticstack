@@ -182,6 +182,77 @@ Adding this mapping in and of itself does nothing more than make your new
 analyzer available. To use it you either need to change your
 `ELASTICSEARCH_DEFAULT_ANALYZER` or specify the analyzer in the search index field.
 
+
+Custom analyzers and index settings per index
+=============================================
+
+Global configurable index mapping is great when all your indexes share same configuration.
+In case of multiple language index configuration you need set settings per index.
+In following we show how to configure application for two language separated indexes (czech and italian)::
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'elasticstack.backends.ConfigurableElasticSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'default',
+        'SETTINGS_NAME': 'default',
+        'DEFAULT_ANALYZER': 'snowball',
+    },
+    'default_cs': {
+        'ENGINE': 'elasticstack.backends.ConfigurableElasticSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'default_cs',
+        'SETTINGS_NAME': 'cs',
+        'DEFAULT_ANALYZER': 'czech_hunspell',
+    },
+    'default_it': {
+        'ENGINE': 'elasticstack.backends.ConfigurableElasticSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'default_it',
+        'SETTINGS_NAME': 'default',
+        'DEFAULT_ANALYZER': 'italian',
+    },
+}
+
+ELASTICSEARCH_INDEX_SETTINGS = {
+    'cs': {
+        "settings": {
+            "analysis": {
+                "analyzer": {
+                    "czech_hunspell": {
+                        "type": "custom",
+                        "tokenizer": "standard",
+                        "filter": ["stopwords_CZ", "lowercase", "hunspell_CZ", "stopwords_CZ", "remove_duplicities"]
+                    }
+                },
+                "filter": {
+                    "stopwords_CZ": {
+                        "type": "stop",
+                        "stopwords": ["_czech_"],
+                        "ignore_case": True
+                    },
+                    "hunspell_CZ": {
+                        "type": "hunspell",
+                        "locale": "cs_CZ",
+                        "dedup": True,
+                        "recursion_level": 0
+                    },
+                    "remove_duplicities": {
+                        "type": "unique",
+                        "only_on_same_position": True
+                    },
+                }
+            }
+        }
+    },
+}
+
+.. note::
+    Czech configures hunspell dictionary. For this example you need to
+    `install it <https://www.elastic.co/guide/en/elasticsearch/guide/current/hunspell.html>`_
+
+
 Realizing custom changes
 ========================
 

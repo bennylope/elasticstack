@@ -36,11 +36,11 @@ ElasticSearch in mind.
 
 For more background see the blog post `Stretching Haystack's ElasticSearch Backend <http://www.wellfireinteractive.com/blog/custom-haystack-elasticsearch-backend/>`_.
 
-Configurable index mapping
---------------------------
+Global configurable index mapping
+---------------------------------
 
 The search mapping provided by Haystack's ElasticSearch backend includes brief
-but sensible defaults for nGram analysis. You can add change these settings or
+but sensible defaults for nGram analysis. You can globaly add change these settings or
 add your own mappings by providing a mapping dictionary using
 `ELASTICSEARCH_INDEX_SETTINGS` in your settings file. This example takes the
 default mapping and adds a synonym analyzer::
@@ -129,6 +129,58 @@ If you want to specify a custom search_analyzer for nGram/EdgeNgram fields,
 define it with the `ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER` settings::
 
     ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER = 'standard'
+
+Configurable index mapping per index
+------------------------------------
+
+Alternatively you can configure index mapping per index. This is usefull for multilanguage index settup.
+In this case `HAYSTACK_CONNECTION` contains key `SETTINGS_NAME` have to match with name in `ELASTICSEARCH_INDEX_SETTINGS`::
+
+
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'elasticstack.backends.ConfigurableElasticSearchEngine',
+            'URL': env_var('HAYSTACK_URL', 'http://127.0.0.1:9200/'),
+            'INDEX_NAME': 'haystack',
+            'SETTINGS_NAME': 'cs',
+            'DEFAULT_ANALYZER': 'czech_hunspell',
+            'DEFAULT_NGRAM_SEARCH_ANALYZER': 'standard',
+        },
+    }
+
+    ELASTICSEARCH_INDEX_SETTINGS = {
+        'cs': {
+            "settings": {
+                "analysis": {
+                    "analyzer": {
+                        "czech_hunspell": {
+                            "type": "custom",
+                            "tokenizer": "standard",
+                            "filter": ["stopwords_CZ", "lowercase", "hunspell_CZ", "stopwords_CZ", "remove_duplicities"]
+                        }
+                    },
+                    "filter": {
+                        "stopwords_CZ": {
+                            "type": "stop",
+                            "stopwords": ["právě", "že", "test", "_czech_"],
+                            "ignore_case": True
+                        },
+                        "hunspell_CZ": {
+                            "type": "hunspell",
+                            "locale": "cs_CZ",
+                            "dedup": True,
+                            "recursion_level": 0
+                        },
+                        "remove_duplicities": {
+                            "type": "unique",
+                            "only_on_same_position": True
+                        },
+                    }
+                }
+            }
+        },
+    }
+
 
 Field based analysis
 --------------------

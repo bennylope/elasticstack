@@ -2,8 +2,8 @@
 Credits
 =======
 
-Development Lead
-----------------
+Author
+------
 
 * Ben Lopatin @bennylope
 
@@ -12,5 +12,8 @@ Contributors
 
 * Basil Shubin @bashu
 * Joe Stump @joestump
-* @rjor2
+* Mario César @mariocesar
+* Martin Svoboda @martinsvoboda
 * Mike Brown @m3brown
+* Seizan Shimazaki @seizans
+* @rjor2

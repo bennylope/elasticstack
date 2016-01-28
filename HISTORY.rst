@@ -3,6 +3,11 @@
 History
 -------
 
+0.4.0 (2016-01-28)
+++++++++++++++++++
+
+* Allow changing search settings on an index-by-index basis
+
 0.3.0 (2015-12-31)
 ++++++++++++++++++
 

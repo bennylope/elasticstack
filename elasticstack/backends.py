@@ -22,6 +22,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from haystack.backends.elasticsearch_backend import \
         ElasticsearchSearchBackend, ElasticsearchSearchEngine
 
@@ -36,11 +37,45 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
 
     def __init__(self, connection_alias, **connection_options):
         super(ConfigurableElasticBackend, self).__init__(connection_alias, **connection_options)
-        user_settings = getattr(settings, 'ELASTICSEARCH_INDEX_SETTINGS', None)
-        user_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_ANALYZER', None)
-        ngram_search_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER', None)
-        if user_settings:
-            setattr(self, 'DEFAULT_SETTINGS', user_settings)
+
+        # user index settings
+
+        global_settings_dict = getattr(settings, 'ELASTICSEARCH_INDEX_SETTINGS', None)
+        if global_settings_dict:
+            if 'settings' in global_settings_dict and 'SETTINGS_NAME' in connection_options:
+                raise ImproperlyConfigured("You cannot specify ELASTICSEARCH_INDEX_SETTINGS['settings'] in settings "
+                                           "and also 'SETTINGS_NAME' in your index connection '%s'. "
+                                           "Use only one configuration way." % connection_alias)
+
+            user_settings = None
+            if 'settings' in global_settings_dict:
+                user_settings = getattr(settings, 'ELASTICSEARCH_INDEX_SETTINGS', None)
+            if 'SETTINGS_NAME' in connection_options:
+                settings_name = connection_options.get('SETTINGS_NAME', None)
+                if not settings_name in global_settings_dict:
+                    raise ImproperlyConfigured("'SETTINGS_NAME' '%s' is missing in ELASTICSEARCH_INDEX_SETTINGS dict." % settings_name)
+                user_settings = global_settings_dict.get(settings_name)
+
+            if user_settings:
+                setattr(self, 'DEFAULT_SETTINGS', user_settings)
+
+
+        # user settings of analyzers
+
+        if hasattr(settings, 'ELASTICSEARCH_DEFAULT_ANALYZER') and 'DEFAULT_ANALYZER' in connection_options:
+            raise ImproperlyConfigured("You cannot specify ELASTICSEARCH_DEFAULT_ANALYZER in settings "
+                                       "and also 'DEFAULT_ANALYZER' in your index connection '%s'. "
+                                       "Use only one configuration way." % connection_alias)
+
+        if hasattr(settings, 'ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER') and 'DEFAULT_NGRAM_SEARCH_ANALYZER' in connection_options:
+            raise ImproperlyConfigured("You cannot specify ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER in settings "
+                                       "and also 'DEFAULT_NGRAM_SEARCH_ANALYZER' in your index connection '%s'. "
+                                       "Use only one configuration way." % connection_alias)
+
+        user_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_ANALYZER', None) or \
+                            connection_options.get('DEFAULT_ANALYZER', None)
+        ngram_search_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER', None) or \
+                                    connection_options.get('DEFAULT_NGRAM_SEARCH_ANALYZER', None)
         if user_analyzer:
             setattr(self, 'DEFAULT_ANALYZER', user_analyzer)
         if ngram_search_analyzer:

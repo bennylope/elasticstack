@@ -7,6 +7,7 @@ test_elasticstack
 
 Tests for `elasticstack` backends module.
 """
+from django.core.exceptions import ImproperlyConfigured
 
 from django.test import TestCase
 from django.test.utils import override_settings
@@ -18,7 +19,7 @@ from elasticstack import backends
 from elasticstack import fields
 
 
-class TestBackendSettings(TestCase):
+class TestGlobalBackendSettings(TestCase):
     """
     Basic tests that the backend replaces the attributes as expected.
     """
@@ -30,12 +31,12 @@ class TestBackendSettings(TestCase):
             'default', URL="http://localhost:9200", INDEX_NAME="")
         self.assertEqual(back_class.DEFAULT_ANALYZER, "stop")
 
-    @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"index": 4})
+    @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"settings": 4})
     def test_user_settings(self):
         """Ensure that the default index settings are overridden"""
         back_class = backends.ConfigurableElasticBackend(
             'default', URL="http://localhost:9200", INDEX_NAME="")
-        self.assertEqual(back_class.DEFAULT_SETTINGS, {"index": 4})
+        self.assertEqual(back_class.DEFAULT_SETTINGS, {"settings": 4})
 
     @override_settings(ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
     def test_ngram_user_analyzer(self):
@@ -43,6 +44,64 @@ class TestBackendSettings(TestCase):
         back_class = backends.ConfigurableElasticBackend(
             'default', URL="http://localhost:9200", INDEX_NAME="")
         self.assertEqual(back_class.DEFAULT_NGRAM_SEARCH_ANALYZER, "stop")
+
+
+class TestIndexSpecificBackendSettings(TestCase):
+    """
+    Basic tests for index specific settings
+    """
+
+    def test_user_analyzer(self):
+        """Ensure that the default analyzer is overridden"""
+        back_class = backends.ConfigurableElasticBackend(
+            'default', URL="http://localhost:9200", INDEX_NAME="", DEFAULT_ANALYZER="stop")
+        self.assertEqual(back_class.DEFAULT_ANALYZER, "stop")
+
+    @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"czech": {"settings": 4}})
+    def test_user_settings(self):
+        """Ensure that the default index settings are overridden"""
+        back_class = backends.ConfigurableElasticBackend(
+            'default', URL="http://localhost:9200", INDEX_NAME="", SETTINGS_NAME="czech")
+        self.assertEqual(back_class.DEFAULT_SETTINGS, {"settings": 4})
+
+    def test_ngram_user_analyzer(self):
+        """Ensure that the default analyzer is overridden"""
+        back_class = backends.ConfigurableElasticBackend(
+            'default', URL="http://localhost:9200", INDEX_NAME="", DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
+        self.assertEqual(back_class.DEFAULT_NGRAM_SEARCH_ANALYZER, "stop")
+
+    @override_settings(ELASTICSEARCH_DEFAULT_ANALYZER="stop")
+    def test_duplicit_user_analyzer_definition(self):
+        """Ensure that exception is raised when analyzer is set global setting and also index settings"""
+        with self.assertRaises(ImproperlyConfigured):
+            back_class = backends.ConfigurableElasticBackend(
+                'default', URL="http://localhost:9200", INDEX_NAME="", DEFAULT_ANALYZER="stop")
+
+    @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"settings": 4})
+    def test_duplicit_user_settings_definition(self):
+        """Ensure that exception is raised when analyzer is set global setting and also index settings"""
+        with self.assertRaises(ImproperlyConfigured):
+            back_class = backends.ConfigurableElasticBackend(
+                'default', URL="http://localhost:9200", INDEX_NAME="", SETTINGS_NAME="czech")
+            self.assertEqual(back_class.DEFAULT_SETTINGS, {"settings": 4})
+
+    @override_settings(ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
+    def test_duplicit_ngram_user_analyzer_definition(self):
+        """Ensure that exception is raised when analyzer is set global setting and also index settings"""
+        with self.assertRaises(ImproperlyConfigured):
+            back_class = backends.ConfigurableElasticBackend(
+                'default', URL="http://localhost:9200", INDEX_NAME="", DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
+
+    @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"czech": {"settings": 4}})
+    def test_invalid_settings_name(self):
+        """Ensure that exception is raised when settings name not found"""
+        with self.assertRaises(ImproperlyConfigured):
+            back_class = backends.ConfigurableElasticBackend(
+                'default', URL="http://localhost:9200", INDEX_NAME="", SETTINGS_NAME="notexist")
+
+
+
+
 
 
 class TestSchema(TestCase):

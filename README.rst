@@ -11,7 +11,7 @@ elasticstack
 .. image:: https://pypip.in/d/elasticstack/badge.svg
         :target: https://crate.io/packages/elasticstack?version=latest
 
-:Version: 0.4.0
+:Version: 0.4.1
 :Author: Ben Lopatin (http://benlopatin.com)
 
 Configurable indexing and other extras for Haystack (with ElasticSearch
@@ -22,7 +22,7 @@ Full documentation is on `Read the Docs <http://elasticstack.readthedocs.org/en/
 Requirements
 ============
 
-* `Django <https://www.djangoproject.com/>`_: tested against Django 1.4, 1.8, and 1.9
+* `Django <https://www.djangoproject.com/>`_: tested against Django 1.8, and 1.9
 * `Haystack <http://www.haystacksearch.org/>`_: tested against Haystack 2.4.0,
   it should work with any combination of Haystack and Django that work
 * `ElasticSearch <http://www.elasticsearch.org/>`_: presumably any newish

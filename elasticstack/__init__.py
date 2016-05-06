@@ -25,6 +25,6 @@
 
 __title__ = 'elasticstack'
 __author__ = 'Ben Lopatin'
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 default_app_config = 'elasticstack.apps.ElasticstackConfig'

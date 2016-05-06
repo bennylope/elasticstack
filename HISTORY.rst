@@ -3,6 +3,12 @@
 History
 -------
 
+0.4.1 (2016-05-05)
+++++++++++++++++++
+
+* Fix encoding issue in installation. In at least one known environment/Python3
+  combination an encoding issue prevented installation of the package.
+
 0.4.0 (2016-01-28)
 ++++++++++++++++++
 

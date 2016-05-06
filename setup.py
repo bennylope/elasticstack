@@ -7,8 +7,14 @@ import elasticstack
 
 version = elasticstack.__version__
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+try:
+    readme = open("README.rst", encoding="utf-8").read()
+    history = open("HISTORY.rst", encoding="utf-8").read().replace(".. :changelog:", "")
+except TypeError:
+    # Python 2. Encoding errors may occur.
+    readme = open("README.rst").read()
+    history = open("HISTORY.rst").read().replace(".. :changelog:", "")
+
 
 setup(
     name='elasticstack',

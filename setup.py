@@ -7,7 +7,7 @@ import elasticstack
 
 version = elasticstack.__version__
 
-readme = open('README.rst').read()
+readme = open('README.rst', encoding="utf-8").read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(

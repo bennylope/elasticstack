@@ -3,6 +3,12 @@
 History
 -------
 
+0.5.0 (2017-03-17)
+++++++++++++++++++
+
+* Replace deprecated option_list in commands with add_arguments method
+* Update Django versions in tox config and docs
+
 0.4.1 (2016-05-05)
 ++++++++++++++++++
 

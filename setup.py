@@ -29,7 +29,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'Django>=1.4',
+        'Django>=1.8',
         'django-haystack>=2.0.0',
     ],
     license="BSD",

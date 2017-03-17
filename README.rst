@@ -1,6 +1,6 @@
-============
+############
 elasticstack
-============
+############
 
 .. image:: https://badge.fury.io/py/elasticstack.svg
     :target: http://badge.fury.io/py/elasticstack
@@ -234,7 +234,7 @@ Management commands
 -------------------
 
 show_mapping
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Make a change and wonder why your results don't look as expected? The
 management command `show_mapping` will print the current mapping for
@@ -293,7 +293,7 @@ analyzers.::
     }
 
 show_document
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 Provided the name of an indexed model and a key it generates and prints the
 generated document for this object::

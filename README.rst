@@ -11,7 +11,7 @@ elasticstack
 .. image:: https://pypip.in/d/elasticstack/badge.svg
         :target: https://crate.io/packages/elasticstack?version=latest
 
-:Version: 0.4.1
+:Version: 0.5.0
 :Author: Ben Lopatin (http://benlopatin.com)
 
 Configurable indexing and other extras for Haystack (with ElasticSearch
@@ -306,9 +306,8 @@ Stability, docs, and tests
 ==========================
 
 The form, view, and backend functionality in this project is considered stable.
-Test coverage is not substantial, but is run against Django 1.4 through Django
-1.6 on Python 2.6 and Python 2.7, Django 1.5 and Django 1.6 on Python 3.3, and
-Django 1.6 on PyPy.
+Test coverage is not substantial, but is run against Django 1.8 through Django
+1.10 on Python 2.7, 3.4, and 3.5.
 
 Why not add this stuff to Haystack?
 -----------------------------------

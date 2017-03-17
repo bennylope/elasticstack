@@ -35,7 +35,7 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
     DEFAULT_ANALYZER = "snowball"
     DEFAULT_NGRAM_SEARCH_ANALYZER = None
 
-    def __init__(self, connection_alias, **connection_options):
+    def __init__(self, connection_alias, **connection_options):  # noqa
         super(ConfigurableElasticBackend, self).__init__(connection_alias, **connection_options)
 
         # user index settings
@@ -52,13 +52,12 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
                 user_settings = getattr(settings, 'ELASTICSEARCH_INDEX_SETTINGS', None)
             if 'SETTINGS_NAME' in connection_options:
                 settings_name = connection_options.get('SETTINGS_NAME', None)
-                if not settings_name in global_settings_dict:
+                if settings_name not in global_settings_dict:
                     raise ImproperlyConfigured("'SETTINGS_NAME' '%s' is missing in ELASTICSEARCH_INDEX_SETTINGS dict." % settings_name)
                 user_settings = global_settings_dict.get(settings_name)
 
             if user_settings:
                 setattr(self, 'DEFAULT_SETTINGS', user_settings)
-
 
         # user settings of analyzers
 
@@ -73,9 +72,9 @@ class ConfigurableElasticBackend(ElasticsearchSearchBackend):
                                        "Use only one configuration way." % connection_alias)
 
         user_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_ANALYZER', None) or \
-                            connection_options.get('DEFAULT_ANALYZER', None)
+            connection_options.get('DEFAULT_ANALYZER', None)
         ngram_search_analyzer = getattr(settings, 'ELASTICSEARCH_DEFAULT_NGRAM_SEARCH_ANALYZER', None) or \
-                                    connection_options.get('DEFAULT_NGRAM_SEARCH_ANALYZER', None)
+            connection_options.get('DEFAULT_NGRAM_SEARCH_ANALYZER', None)
         if user_analyzer:
             setattr(self, 'DEFAULT_ANALYZER', user_analyzer)
         if ngram_search_analyzer:

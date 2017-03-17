@@ -23,8 +23,6 @@
 
 import json
 
-from optparse import make_option
-
 from django.core.management.base import BaseCommand
 
 from ...utils import prepare_object, get_model
@@ -35,12 +33,14 @@ class Command(BaseCommand):
     help = "Prints the indexing document generated for a model object." \
         "\nUse dotted path name for model and the primary key."
 
-    option_list = BaseCommand.option_list + (
-        make_option('--using',
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--using',
             action='store',
             dest='using',
             default='default',
-            help='The Haystack backend to use'),)
+            help='The Haystack backend to use',
+        )
 
     def handle(self, *args, **options):
         try:

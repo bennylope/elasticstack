@@ -4,10 +4,10 @@ env:
   - TOX_ENV=flake8
   - TOX_ENV=py27-django18-haystack24
   - TOX_ENV=py27-django19-haystack24
+  - TOX_ENV=py27-django110-haystack24
   - TOX_ENV=py34-django18-haystack24
   - TOX_ENV=py34-django19-haystack24
-  - TOX_ENV=py35-django18-haystack24
-  - TOX_ENV=py35-django19-haystack24
+  - TOX_ENV=py34-django110-haystack24
 install:
   - pip install tox
 script:

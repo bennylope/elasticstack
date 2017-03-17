@@ -74,7 +74,7 @@ class TestIndexSpecificBackendSettings(TestCase):
     def test_duplicit_user_analyzer_definition(self):
         """Ensure that exception is raised when analyzer is set global setting and also index settings"""
         with self.assertRaises(ImproperlyConfigured):
-            back_class = backends.ConfigurableElasticBackend(
+            backends.ConfigurableElasticBackend(
                 'default', URL="http://localhost:9200", INDEX_NAME="", DEFAULT_ANALYZER="stop")
 
     @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"settings": 4})
@@ -89,19 +89,15 @@ class TestIndexSpecificBackendSettings(TestCase):
     def test_duplicit_ngram_user_analyzer_definition(self):
         """Ensure that exception is raised when analyzer is set global setting and also index settings"""
         with self.assertRaises(ImproperlyConfigured):
-            back_class = backends.ConfigurableElasticBackend(
+            backends.ConfigurableElasticBackend(
                 'default', URL="http://localhost:9200", INDEX_NAME="", DEFAULT_NGRAM_SEARCH_ANALYZER="stop")
 
     @override_settings(ELASTICSEARCH_INDEX_SETTINGS={"czech": {"settings": 4}})
     def test_invalid_settings_name(self):
         """Ensure that exception is raised when settings name not found"""
         with self.assertRaises(ImproperlyConfigured):
-            back_class = backends.ConfigurableElasticBackend(
+            backends.ConfigurableElasticBackend(
                 'default', URL="http://localhost:9200", INDEX_NAME="", SETTINGS_NAME="notexist")
-
-
-
-
 
 
 class TestSchema(TestCase):

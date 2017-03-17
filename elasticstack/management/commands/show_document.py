@@ -23,8 +23,6 @@
 
 import json
 
-from optparse import make_option
-
 from django.core.management.base import BaseCommand
 
 from ...utils import prepare_object, get_model

@@ -62,13 +62,15 @@ test-all:
 
 check: clean-build clean-pyc clean-test lint test-coverage
 
-release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+build: clean  ## Create distribution files for release
+	python setup.py sdist bdist_wheel
 
-dist: clean
+release: build
+	python setup.py check -r -s
+	twine upload dist/*
+
+sdist: clean
 	python setup.py sdist
-	python setup.py bdist_wheel
 	ls -l dist
 
 docs:

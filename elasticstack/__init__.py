@@ -23,8 +23,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-__title__ = 'elasticstack'
-__author__ = 'Ben Lopatin'
-__version__ = '0.5.0'
+__title__ = "elasticstack"
+__author__ = "Ben Lopatin"
+__version__ = "0.5.0"
 
-default_app_config = 'elasticstack.apps.ElasticstackConfig'
+default_app_config = "elasticstack.apps.ElasticstackConfig"

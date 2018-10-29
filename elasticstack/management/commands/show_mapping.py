@@ -31,16 +31,15 @@ from haystack import connections
 
 class Command(BaseCommand):
 
-    help = "Prints the search mapping for specififed connections." \
-        "\nDefaults to all connections in settings."
+    help = "Prints the search mapping for specififed connections." "\nDefaults to all connections in settings."
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--detail',
-            action='store_true',
-            dest='detail',
+            "--detail",
+            action="store_true",
+            dest="detail",
             default=False,
-            help='Display mapping details, including analyzers and boost levels.',
+            help="Display mapping details, including analyzers and boost levels.",
         )
 
     def handle(self, *args, **options):
@@ -48,10 +47,12 @@ class Command(BaseCommand):
         for backend in backends:
             engine = connections[backend].get_backend()
             unified_index = connections[backend].get_unified_index()
-            content_field_name, field_mapping = engine.build_schema(unified_index.all_searchfields())
+            content_field_name, field_mapping = engine.build_schema(
+                unified_index.all_searchfields()
+            )
             engine.setup()
 
-            if options.get('detail'):
+            if options.get("detail"):
                 mapping = field_mapping
             else:
                 mapping = engine.existing_mapping

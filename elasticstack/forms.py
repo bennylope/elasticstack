@@ -35,16 +35,16 @@ class SearchForm(forms.Form):
     Another field can be substituted provided that it is identified using the
     `search_field_name` attribute.
     """
-    q = forms.CharField(label=_('Search'))
+    q = forms.CharField(label=_("Search"))
 
-    search_field_name = 'q'
+    search_field_name = "q"
 
     def __init__(self, *args, **kwargs):
-        self.searchqueryset = kwargs.pop('searchqueryset', SearchQuerySet())
-        self.load_all = kwargs.pop('load_all', False)
+        self.searchqueryset = kwargs.pop("searchqueryset", SearchQuerySet())
+        self.load_all = kwargs.pop("load_all", False)
         super(SearchForm, self).__init__(*args, **kwargs)
-        if self.search_field_name != 'q':
-            self.fields.pop('q')
+        if self.search_field_name != "q":
+            self.fields.pop("q")
 
     def search(self):
         if not self.is_valid():
@@ -64,4 +64,6 @@ class SearchForm(forms.Form):
         if not self.is_valid():
             return None
 
-        return self.searchqueryset.spelling_suggestion(self.cleaned_data[self.search_field_name])
+        return self.searchqueryset.spelling_suggestion(
+            self.cleaned_data[self.search_field_name]
+        )

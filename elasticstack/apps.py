@@ -27,5 +27,5 @@ from django.apps import AppConfig
 
 
 class ElasticstackConfig(AppConfig):
-    name = 'elasticstack'
-    verbose_name = 'elasticstack'
+    name = "elasticstack"
+    verbose_name = "elasticstack"

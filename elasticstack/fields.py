@@ -21,18 +21,20 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from haystack.fields import (CharField as BaseCharField,
-        LocationField as BaseLocationField,
-        NgramField as BaseNgramField,
-        EdgeNgramField as BaseEdgeNgramField,
-        IntegerField as BaseIntegerField,
-        FloatField as BaseFloatField,
-        DecimalField as BaseDecimalField,
-        BooleanField as BaseBooleanField,
-        DateField as BaseDateField,
-        DateTimeField as BaseDateTimeField,
-        MultiValueField as BaseMultiValueField,
-        FacetField as BaseFacetField)
+from haystack.fields import (
+    CharField as BaseCharField,
+    LocationField as BaseLocationField,
+    NgramField as BaseNgramField,
+    EdgeNgramField as BaseEdgeNgramField,
+    IntegerField as BaseIntegerField,
+    FloatField as BaseFloatField,
+    DecimalField as BaseDecimalField,
+    BooleanField as BaseBooleanField,
+    DateField as BaseDateField,
+    DateTimeField as BaseDateTimeField,
+    MultiValueField as BaseMultiValueField,
+    FacetField as BaseFacetField,
+)
 
 
 class ConfigurableFieldMixin(object):
@@ -41,10 +43,11 @@ class ConfigurableFieldMixin(object):
     """
 
     def __init__(self, **kwargs):
-        self.analyzer = kwargs.pop('analyzer', None)
-        self.search_analyzer = kwargs.pop('search_analyzer', None)
+        self.analyzer = kwargs.pop("analyzer", None)
+        self.search_analyzer = kwargs.pop("search_analyzer", None)
         if self.analyzer is None:
             raise ValueError("Configurable fields must have an analyzer type")
+
         super(ConfigurableFieldMixin, self).__init__(**kwargs)
 
 

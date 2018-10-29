@@ -20,10 +20,10 @@ class TestForms(TestCase):
         """Ensure that the `q` field can be optionally used"""
 
         class MyForm(SearchForm):
-            s = forms.CharField(label='Search')
-            f = forms.CharField(label='More search')
-            search_field_name = 's'
+            s = forms.CharField(label="Search")
+            f = forms.CharField(label="More search")
+            search_field_name = "s"
 
         form = MyForm()
-        self.assertTrue('s' in form.fields)
-        self.assertFalse('q' in form.fields)
+        self.assertTrue("s" in form.fields)
+        self.assertFalse("q" in form.fields)

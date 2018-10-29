@@ -30,16 +30,15 @@ from ...utils import prepare_object, get_model
 
 class Command(BaseCommand):
 
-    help = "Prints the indexing document generated for a model object." \
-        "\nUse dotted path name for model and the primary key."
+    help = "Prints the indexing document generated for a model object." "\nUse dotted path name for model and the primary key."
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--using',
-            action='store',
-            dest='using',
-            default='default',
-            help='The Haystack backend to use',
+            "--using",
+            action="store",
+            dest="using",
+            default="default",
+            help="The Haystack backend to use",
         )
 
     def handle(self, *args, **options):
@@ -49,9 +48,9 @@ class Command(BaseCommand):
             self.stderr.write("Provide the model name and primary key")
             exit(1)
 
-        app_label, model_name = label.split('.')
+        app_label, model_name = label.split(".")
         model = get_model(app_label, model_name)
 
         obj = model.objects.get(pk=pk)
-        doc_json = prepare_object(obj, options.get('using'))
+        doc_json = prepare_object(obj, options.get("using"))
         self.stdout.write(json.dumps(doc_json, indent=4))

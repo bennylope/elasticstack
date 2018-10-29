@@ -31,7 +31,7 @@ from haystack.forms import ModelSearchForm, FacetedSearchForm
 from haystack.query import EmptySearchQuerySet
 
 
-RESULTS_PER_PAGE = getattr(settings, 'HAYSTACK_SEARCH_RESULTS_PER_PAGE', 20)
+RESULTS_PER_PAGE = getattr(settings, "HAYSTACK_SEARCH_RESULTS_PER_PAGE", 20)
 
 
 class SearchMixin(MultipleObjectMixin, FormMixin):
@@ -59,7 +59,7 @@ class SearchMixin(MultipleObjectMixin, FormMixin):
         3. Return the paginated queryset
 
     """
-    template_name = 'search/search.html'
+    template_name = "search/search.html"
     load_all = True
     form_class = ModelSearchForm
     queryset = EmptySearchQuerySet()
@@ -67,36 +67,41 @@ class SearchMixin(MultipleObjectMixin, FormMixin):
     paginate_by = RESULTS_PER_PAGE
     paginate_orphans = 0
     paginator_class = Paginator
-    page_kwarg = 'page'
-    form_name = 'form'
-    search_field = 'q'
+    page_kwarg = "page"
+    form_name = "form"
+    search_field = "q"
 
     def get_form_kwargs(self):
         """
         Returns the keyword arguments for instantiating the form.
         """
-        kwargs = {'initial': self.get_initial()}
-        if self.request.method == 'GET':
-            kwargs.update({
-                'data': self.request.GET,
-            })
-        kwargs.update({'searchqueryset': self.get_query_set()})
+        kwargs = {"initial": self.get_initial()}
+        if self.request.method == "GET":
+            kwargs.update({"data": self.request.GET})
+        kwargs.update({"searchqueryset": self.get_query_set()})
         return kwargs
 
     def get_query_set(self):
         return self.queryset
 
     def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(**{
-            self.form_name: form,
-            'object_list': self.get_query_set()}))
+        return self.render_to_response(
+            self.get_context_data(
+                **{self.form_name: form, "object_list": self.get_query_set()}
+            )
+        )
 
     def form_valid(self, form):
         self.queryset = form.search()
-        return self.render_to_response(self.get_context_data(**{
-            self.form_name: form,
-            'query': form.cleaned_data.get(self.search_field),
-            'object_list': self.queryset}))
+        return self.render_to_response(
+            self.get_context_data(
+                **{
+                    self.form_name: form,
+                    "query": form.cleaned_data.get(self.search_field),
+                    "object_list": self.queryset,
+                }
+            )
+        )
 
 
 class FacetedSearchMixin(SearchMixin):
@@ -108,12 +113,12 @@ class FacetedSearchMixin(SearchMixin):
 
     def get_form_kwargs(self):
         kwargs = super(SearchMixin, self).get_form_kwargs()
-        kwargs.update({'selected_facets': self.request.GET.getlist("selected_facets")})
+        kwargs.update({"selected_facets": self.request.GET.getlist("selected_facets")})
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(FacetedSearchMixin, self).get_context_data(**kwargs)
-        context.update({'facets': self.results.facet_counts()})
+        context.update({"facets": self.results.facet_counts()})
         return context
 
 
@@ -128,6 +133,7 @@ class SearchView(SearchMixin, FormView):
         form = self.get_form(form_class)
         if form.is_valid():
             return self.form_valid(form)
+
         else:
             return self.form_invalid(form)
 
